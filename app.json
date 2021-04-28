@@ -1,0 +1,12 @@
+{
+  "name": "clicksoft",
+  "displayName": "clicksoft",
+  "expo": {
+    "name": "clicksoft",
+    "slug": "clicksoft",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
