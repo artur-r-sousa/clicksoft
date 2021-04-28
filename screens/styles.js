@@ -2,12 +2,25 @@ import React from 'react';
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#add8e6',
+    header: {
+        height: 50,
+        backgroundColor: '#009dff',
         alignItems: 'center',
         justifyContent: 'center',
-      },
+    },
+    titleText: {
+        fontSize: 25,
+        fontWeight: "bold",
+        color: "#fff"
+    },
+    container: {
+        flex: 1,
+        backgroundColor: '#d3d3d3',
+    },
+    posts: {
+        
+    }
+
 })
 
 export default styles;
