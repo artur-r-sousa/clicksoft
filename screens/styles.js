@@ -1,11 +1,13 @@
-import React from 'react';
+
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#d3d3d3',
+    },
     header: {
         height: 50,
         backgroundColor: '#009dff',
-        alignItems: 'center',
         justifyContent: 'center',
     },
     titleText: {
@@ -13,21 +15,20 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#fff"
     },
-    container: {
-        flex: 1,
-        backgroundColor: '#d3d3d3',
-    },
     posts: {
         padding: 8,
         paddingBottom: 5,
         color: "#000000",
-        backgroundColor: "#FFF"
+        backgroundColor: "#FFF",
     },
     postText: {
         padding: 10
     },
     userId: {
         fontSize: 13
+    },
+    item:{
+        color: "#000000"
     }
 
 })
