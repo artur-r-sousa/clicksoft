@@ -18,7 +18,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#d3d3d3',
     },
     posts: {
-        
+        padding: 8,
+        paddingBottom: 5,
+        color: "#000000",
+        backgroundColor: "#FFF"
+    },
+    postText: {
+        padding: 10
+    },
+    userId: {
+        fontSize: 13
     }
 
 })
