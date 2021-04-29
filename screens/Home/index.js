@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { FlatList, SafeAreaView, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
+import { FlatList, SafeAreaView, TextInput, TouchableWithoutFeedback } from 'react-native';
 import axios from "axios";
 import { Container, Title, Posts, PostText, UserId, Item } from '../styles.js'
-
-//what
 
 export default class Home extends Component{
     constructor(props: {}){
         super(props);
         this.fetchFromApi();
+        this.fetchUserFromApi();
         this.state = {
-            postData: []
+            postData: [],
+            userData: []
         };
     }
 
@@ -23,10 +23,21 @@ export default class Home extends Component{
         })
     }
 
+    fetchUserFromApi(){
+        axios.get('https://jsonplaceholder.typicode.com/users').then((response)=> {
+            this.setState({userData: response.data})
+            console.log(this.state.userData['1']['id'])
+
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+    }
+
     render() {
         
         const { postData } = this.state;
-
+        const { userData } = this.state;
         const { navigate } = this.props.navigation;
 
         return ( 
@@ -38,11 +49,13 @@ export default class Home extends Component{
                             data={postData}
                             keyExtractor={(item) => item.id.toString()}
                             renderItem={({item}) => {
-                                //change id for user Names
                                 return (
-                                    <TouchableWithoutFeedback onPress={()=> navigate('Details', {itemId: item.id})}>
+                                    <TouchableWithoutFeedback onPress={() => {
+                                        navigate('Details', {itemId: item.id})}
+                                    }
+                                        >
                                         <Item>
-                                            <UserId>{item.id}</UserId>
+                                            <UserId>{userData[item.userId]['name']}</UserId>
                                             <PostText>{item.body}</PostText>
                                             <TextInput
                                                 placeholder="Enter comment"
