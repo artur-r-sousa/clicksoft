@@ -27,6 +27,8 @@ export default class Home extends Component{
         
         const { postData } = this.state;
 
+        const { navigate } = this.props.navigation;
+
         return ( 
             <Container>
                 <Title> Empresa X </Title>
@@ -38,7 +40,7 @@ export default class Home extends Component{
                             renderItem={({item}) => {
                                 //change id for user Names
                                 return (
-                                    <TouchableWithoutFeedback onPress={()=>{}}>
+                                    <TouchableWithoutFeedback onPress={()=> navigate('Details', {itemId: item.id})}>
                                         <Item>
                                             <UserId>{item.id}</UserId>
                                             <PostText>{item.body}</PostText>

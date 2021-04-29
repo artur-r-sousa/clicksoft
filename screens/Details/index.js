@@ -8,9 +8,12 @@ export default class Details extends Component{
     }
 
     render() {
+
+        const { route } = this.props;
+
         return (
           <View>
-              <Text> Details Page </Text>
+              <Text>{route.params.itemId}</Text>
           </View>  
         );
     }
