@@ -25,8 +25,7 @@ export default class Home extends Component{
 
     fetchUserFromApi(){
         axios.get('https://jsonplaceholder.typicode.com/users').then((response)=> {
-            this.setState({userData: response.data})
-            console.log(this.state.userData['1']['id'])
+            this.setState({userData: response.data});
 
         })
         .catch((error)=>{
@@ -55,8 +54,12 @@ export default class Home extends Component{
                                     }
                                         >
                                         <Item>
-                                            <UserId>{userData[item.userId]['name']}</UserId>
+                                            <TouchableWithoutFeedback onPress={()=>{navigate('UserProfile', {userId: userData[item.userId]['id']})}}>
+                                                <UserId>{userData[item.userId]['name']}</UserId>
+                                            </TouchableWithoutFeedback>
+
                                             <PostText>{item.body}</PostText>
+
                                             <TextInput
                                                 placeholder="Enter comment"
                                             > </TextInput>
