@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FlatList, SafeAreaView, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
 import axios from "axios";
-import styles from '../styles.js';
+import { Container, Title, Posts, PostText, UserId, Item } from '../styles.js'
 
 //what
 
@@ -12,7 +12,6 @@ export default class Home extends Component{
         this.state = {
             postData: []
         };
-        this.styles=styles;
     }
 
     fetchFromApi(){
@@ -29,36 +28,32 @@ export default class Home extends Component{
         const { postData } = this.state;
 
         return ( 
-            <View style={this.styles.container}>
-                <View style={this.styles.header}>
-                    <Text style={this.styles.titleText}> Empresa X </Text>
-                </View>
-
+            <Container>
+                <Title> Empresa X </Title>
                 <SafeAreaView>
-                    <View style={this.styles.posts}> 
+                    <Posts> 
                         <FlatList
                             data={postData}
                             keyExtractor={(item) => item.id.toString()}
-                            style={this.styles.posts}
                             renderItem={({item}) => {
                                 //change id for user Names
                                 return (
                                     <TouchableWithoutFeedback onPress={()=>{}}>
-                                        <View style={this.styles.item}>
-                                            <Text style={this.styles.userId}>{item.id}</Text>
-                                            <Text style={this.styles.postText}>{item.body}</Text>
+                                        <Item>
+                                            <UserId>{item.id}</UserId>
+                                            <PostText>{item.body}</PostText>
                                             <TextInput
                                                 placeholder="Enter comment"
                                             > </TextInput>
-                                        </View>
+                                        </Item>
                                     </TouchableWithoutFeedback>
                                 )
                             }}
                             
                         />
-                    </View>
+                    </Posts>
                 </SafeAreaView>
-            </View>
+            </Container>
         )
     }
 }

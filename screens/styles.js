@@ -1,36 +1,32 @@
+import styled from "styled-components/native";
 
-import { StyleSheet } from "react-native";
+export const Container = styled.View`
+    background-color: #d3d3d3;
+`;
 
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#d3d3d3',
-    },
-    header: {
-        height: 50,
-        backgroundColor: '#009dff',
-        justifyContent: 'center',
-    },
-    titleText: {
-        fontSize: 25,
-        fontWeight: "bold",
-        color: "#fff"
-    },
-    posts: {
-        padding: 8,
-        paddingBottom: 5,
-        color: "#000000",
-        backgroundColor: "#FFF",
-    },
-    postText: {
-        padding: 10
-    },
-    userId: {
-        fontSize: 13
-    },
-    item:{
-        color: "#000000"
-    }
+export const Title = styled.Text`
+    height: 50px;
+    background-color: #009dff;
+    align-content: center;
+    font-size: 25px;
+    font-weight: bold;
+    color: #FFF;
+`;
 
-})
+export const Posts = styled.View`
+    padding: 8px;
+    color: #000000;
+    background-color: #FFF;
+`;
 
-export default styles;
+export const PostText = styled.Text`
+    padding: 10px;
+`;
+
+export const UserId = styled.Text`
+    font-size: 13px;
+`;
+
+export const Item = styled.View`
+    color: #000000;
+`;
