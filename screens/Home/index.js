@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FlatList, SafeAreaView, TextInput, TouchableWithoutFeedback } from 'react-native';
 import axios from "axios";
-import { Container, Title, Posts, PostText, UserId, Item } from '../styles.js'
+import { Container, Title, Posts, PostText, UserName, Item, AppBar } from '../styles.js'
 
 export default class Home extends Component{
     constructor(props: {}){
@@ -25,11 +25,11 @@ export default class Home extends Component{
 
     fetchUserFromApi(){
         axios.get('https://jsonplaceholder.typicode.com/users').then((response)=> {
-            this.setState({userData: response.data});
+            this.setState({userData: response.data}) ;
 
         })
         .catch((error)=>{
-            console.log(error);
+            console.warn(error);
         })
     }
 
@@ -37,39 +37,40 @@ export default class Home extends Component{
         
         const { postData } = this.state;
         const { userData } = this.state;
-        const { navigate } = this.props.navigation;
+        const { navigate } = this.props.navigation ;
 
         return ( 
             <Container>
-                <Title> Empresa X </Title>
+                <AppBar>
+                    <Title> Empresa X </Title>
+                </AppBar>
+                
                 <SafeAreaView>
-                    <Posts> 
-                        <FlatList
-                            data={postData}
-                            keyExtractor={(item) => item.id.toString()}
-                            renderItem={({item}) => {
-                                return (
+                    <FlatList
+                        data={postData}
+                        keyExtractor={(item) => item.id.toString()}
+                        renderItem={({item}) => {
+                            return (
+                                <Posts>
                                     <TouchableWithoutFeedback onPress={() => {
                                         navigate('Details', {itemId: item.id})}
                                     }
                                         >
                                         <Item>
                                             <TouchableWithoutFeedback onPress={()=>{navigate('UserProfile', {userId: userData[item.userId]['id']})}}>
-                                                <UserId>{userData[item.userId]['name']}</UserId>
+                                                <UserName>{userData[item.userId]['name']}</UserName>
                                             </TouchableWithoutFeedback>
 
                                             <PostText>{item.body}</PostText>
 
-                                            <TextInput
-                                                placeholder="Enter comment"
-                                            > </TextInput>
                                         </Item>
                                     </TouchableWithoutFeedback>
-                                )
-                            }}
-                            
-                        />
-                    </Posts>
+                                </Posts>
+                                    
+                            )
+                        }}
+                        
+                    />
                 </SafeAreaView>
             </Container>
         )
