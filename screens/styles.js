@@ -17,7 +17,6 @@ export const AppBar = styled.View`
     align-content: center;
     justify-content: center;
     color: #FFF;
-    
 `;
 
 export const Posts = styled.View`
@@ -50,4 +49,46 @@ export const Item = styled.View`
     padding: 5px
     border-radius: 6px;
     border: 1px solid #000000;
+`;
+
+
+export const Avatar = styled.Image`
+    width: 100px;
+    height: 100px;
+    position: absolute;
+	top: 30px;
+	left: 30px;
+    border: 1px solid #000000;
+    border-radius: 6px;
+`;
+
+export const ProfileUsername = styled.Text`
+    margin-left: 150px;
+    margin-top: 30px;
+    font-size: 23px;
+    font-weight: 700;
+    color: #000000;
+`;
+
+
+export const ProfileText = styled.Text`
+    margin-left: 150px;
+    margin-top: 30px;
+    font-size: 14px;
+    font-weight: 300;
+    color: #555555;
+`;
+
+export const deleteButton = styled.Button`
+
+
+
+`;
+
+export const LatestPostLabel = styled.Text`
+    margin-left: 30px;
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #555555;
 `;

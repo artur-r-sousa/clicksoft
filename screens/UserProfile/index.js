@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, Image, View } from 'react-native';
 import axios from "axios";
-
+import { Avatar, ProfileText, ProfileUsername, LatestPostLabel } from '../styles.js'
 
 export default class UserProfile extends Component{
     constructor(props: {}){
@@ -21,7 +21,11 @@ export default class UserProfile extends Component{
                 data: response.data, 
                 address: response.data.address, 
                 geo: response.data.address.geo,
-                company: response.data.company
+                company: response.data.company,
+                
+            })
+            this.setState({
+                isLoading: false
             })
             
         })
@@ -31,16 +35,18 @@ export default class UserProfile extends Component{
     }
 
     render(){
+        
         return(
             <View>
-
-                <Text>name: {this.state.data.name}</Text>
-                <Text>username: {this.state.data.username}</Text>
-                <Text>email: {this.state.data.email}</Text>
-                <Text>street: {this.state.address.street}</Text>
-                <Text>lat: {this.state.geo.lat}</Text>
-                <Text>phone: {this.state.data.phone}</Text>
-                <Text>company name: {this.state.company.name}</Text>
+                <Avatar source={require('../assets/user-icon.png')}/>
+                <ProfileUsername>{this.state.data.name}</ProfileUsername>
+                <ProfileText>username: {this.state.data.username}</ProfileText>
+                <ProfileText>email: {this.state.data.email}</ProfileText>
+                <ProfileText>street: {this.state.address.street}</ProfileText>
+                <ProfileText>lat: {this.state.geo.lat}</ProfileText>
+                <ProfileText>phone: {this.state.data.phone}</ProfileText>
+                <ProfileText>company name: {this.state.company.name}</ProfileText>
+                <LatestPostLabel> Latest posts by {this.state.data.name} </LatestPostLabel>
             </View>
         )
 
