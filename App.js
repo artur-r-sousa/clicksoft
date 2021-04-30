@@ -23,7 +23,7 @@ export default class App extends Component {
           <Stack.Screen name="Details" component={Details} options={{headerShown: false}}/>
           <Stack.Screen name="UserProfile" component={UserProfile} options={{headerShown: false}}/>
         </Stack.Navigator>
-      </NavigationContainer>
+      </NavigationContainer >
     );
   }
   

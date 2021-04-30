@@ -6,7 +6,7 @@ import { Avatar, ProfileText, ProfileUsername, LatestPostLabel } from '../styles
 export default class UserProfile extends Component{
     constructor(props: {}){
         super(props);
-        this.fetchFromApi(this.props.route.params.userId);
+        this.fetchUserFromApi(this.props.route.params.userId);
         this.state = {
             data: {},
             address: {},
@@ -15,7 +15,7 @@ export default class UserProfile extends Component{
         };
     }
 
-    fetchFromApi(userId){
+    fetchUserFromApi(userId){
         axios.get('https://jsonplaceholder.typicode.com/users/'+userId).then((response)=> {
             this.setState({
                 data: response.data, 

@@ -7,7 +7,7 @@ export default class Home extends Component{
     constructor(props: {}){
         super(props);
         this.fetchFromApi();
-        this.fetchUserFromApi();
+        this.fetchUsersFromApi();
         this.state = {
             isLoading: true,
             postData: [],
@@ -25,7 +25,7 @@ export default class Home extends Component{
         })
     }
 
-    fetchUserFromApi(){
+    fetchUsersFromApi(){
         axios.get('https://jsonplaceholder.typicode.com/users').then((response)=> {
             this.setState({userData: response.data}) ;
 

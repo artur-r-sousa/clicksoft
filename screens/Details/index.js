@@ -1,32 +1,55 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import axios from "axios";
+import { Container, Title, Posts, PostText, UserName, Item, AppBar } from '../styles.js'
 
 export default class Details extends Component{
     constructor(props: {}){
         super(props);
         this.fetchFromApi(this.props.route.params.itemId);
         this.state = {
-            data: {}
+            postData: {},
+            userData: {},
+            address: {},
+            geo: {},
+            company: {}
         };
     }
 
-    fetchFromApi(itemId){
-        axios.get('https://jsonplaceholder.typicode.com/posts/'+itemId).then((response)=> {
-            this.setState({data: response.data});
+    fetchUserFromApi(userId){
+        axios.get('https://jsonplaceholder.typicode.com/users/'+userId).then((response)=> {
+            this.setState({
+                userData: response.data, 
+                address: response.data.address, 
+                geo: response.data.address.geo,
+                company: response.data.company,
+            })
         })
         .catch((error)=>{
             console.log(error);
         })
     }
 
-    
+    fetchFromApi(itemId){
+        axios.get('https://jsonplaceholder.typicode.com/posts/'+itemId).then((response)=> {
+            this.setState({postData: response.data});
+            this.fetchUserFromApi(this.state.postData.userId)
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+    }
 
     render() {
         return (
-          <View>
-              <Text>{this.state.data.body}</Text>
-          </View>  
+          <Container>
+              <Posts>
+                <UserName>{this.state.userData.name}</UserName>
+                <PostText>{this.state.postData.title}</PostText>
+                <Text>{this.state.postData.body}</Text>
+              </Posts>
+              
+          </Container>  
         );
     }
 }

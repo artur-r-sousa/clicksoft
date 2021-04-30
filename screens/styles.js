@@ -26,6 +26,7 @@ export const Posts = styled.View`
     margin-left: 12px;
     margin-right: 12px;
     margin-top: 5px;
+    margin-bottom: 3px;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 
 `;
