@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { FlatList, SafeAreaView, ActivityIndicator, TouchableWithoutFeedback } from 'react-native';
 import axios from "axios";
-import { Container, Title, Posts, PostText, UserName, Item, AppBar } from '../styles.js'
+import { Container, Title, Posts, PostText, UserName, Item, AppBar } from '../styles.js';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class Home extends Component{
     constructor(props: {}){
@@ -11,15 +12,20 @@ export default class Home extends Component{
         this.state = {
             isLoading: true,
             postData: [],
-            userData: []
+            userData: [],
+
         };
     }
 
+
+
+
     fetchFromApi(){
         axios.get('https://jsonplaceholder.typicode.com/posts').then((response)=> {
-            this.setState({postData: response.data})
-            this.setState({isLoading: false})
-        })
+                this.setState({postData: response.data});
+                this.setState({isLoading: false})
+            }
+        )
         .catch((error)=>{
             console.log(error);
         })
@@ -27,12 +33,31 @@ export default class Home extends Component{
 
     fetchUsersFromApi(){
         axios.get('https://jsonplaceholder.typicode.com/users').then((response)=> {
-            this.setState({userData: response.data}) ;
+            this.setState({userData: response.data});    
+        })
+        .catch((error)=>{
+            console.warn(error);
+        })
+    }
+   
+    deleteItemFromApi(itemId) {
+        axios.delete('https://jsonplaceholder.typicode.com/posts/'+itemId).then((response) => {
 
         })
         .catch((error)=>{
             console.warn(error);
         })
+
+    }
+
+    deleteFromState(itemId) {
+        let posts = []
+        for(let item of this.state.postData){
+            if(item.id != itemId){
+                posts.push(item)
+            }
+        }
+        this.setState({postData: posts})
     }
 
     render() {
@@ -55,19 +80,27 @@ export default class Home extends Component{
                             renderItem={({item}) => {
                                 return (
                                     <Posts>
+                                        
                                         <TouchableWithoutFeedback onPress={() => {
                                             navigate('Details', {itemId: item.id})}
                                         }
                                             >
                                             <Item>
                                                 <TouchableWithoutFeedback onPress={()=>{navigate('UserProfile', {userId: userData[item.userId]['id']})}}>
-                                                    <UserName>{userData[item.userId]['name']}</UserName>
+                                                    <UserName>{userData[item.userId - 1]['name']}</UserName>
                                                 </TouchableWithoutFeedback>
 
                                                 <PostText>{item.body}</PostText>
 
                                             </Item>
                                         </TouchableWithoutFeedback>
+
+                                        <TouchableWithoutFeedback>
+                                            <Icon name="delete-outline" size={30} color="black" onPress={()=>{
+                                                this.deleteItemFromApi(item.id)
+                                                this.deleteFromState(item.id)
+                                            }}></Icon>
+                                        </TouchableWithoutFeedback> 
                                     </Posts>
                                         
                                 )

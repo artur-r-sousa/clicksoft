@@ -11,7 +11,8 @@ export default class UserProfile extends Component{
             data: {},
             address: {},
             geo: {},
-            company: {}
+            company: {},
+            
         };
     }
 
