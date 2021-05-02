@@ -59,8 +59,7 @@ export const Avatar = styled.Image`
     position: absolute;
 	top: 30px;
 	left: 30px;
-    border: 1px solid #000000;
-    border-radius: 6px;
+    padding: 5px;
 `;
 
 export const ProfileUsername = styled.Text`
@@ -78,6 +77,7 @@ export const ProfileText = styled.Text`
     font-size: 14px;
     font-weight: 300;
     color: #555555;
+    padding: 5px;
 `;
 
 export const deleteButton = styled.Button`

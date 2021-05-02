@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, SafeAreaView, ActivityIndicator, TouchableWithoutFeedback } from 'react-native';
+import { FlatList, SafeAreaView, ActivityIndicator, TouchableWithoutFeedback, Text, View } from 'react-native';
 import axios from "axios";
 import { Container, Title, Posts, PostText, UserName, Item, AppBar } from '../styles.js';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -13,11 +13,18 @@ export default class Home extends Component{
             isLoading: true,
             postData: [],
             userData: [],
-
+            propsChecker: ""
         };
     }
 
+    componentDidMount(){
+        this.props.navigation.addListener('focus', () => {this.setState({propsChecker: this.props.route.params == undefined ? "" :  this.props.route.params.userId})})
 
+    }
+
+    addToState(){
+        
+    }
 
 
     fetchFromApi(){
@@ -41,8 +48,8 @@ export default class Home extends Component{
     }
    
     deleteItemFromApi(itemId) {
-        axios.delete('https://jsonplaceholder.typicode.com/posts/'+itemId).then((response) => {
-
+        axios.delete('https://jsonplaceholder.typicode.com/posts/'+itemId).then(() => {
+        this.deleteFromState(itemId)
         })
         .catch((error)=>{
             console.warn(error);
@@ -60,17 +67,23 @@ export default class Home extends Component{
         this.setState({postData: posts})
     }
 
+
+
     render() {
         
-        const { postData, isLoading } = this.state;
-        const { userData } = this.state;
-        const { navigate } = this.props.navigation;
+        const { postData, isLoading, userData } = this.state;
+        const { navigate } = this.props.navigation; 
 
         return ( 
             <Container>
                 <AppBar>
                     <Title> Empresa X </Title>
                 </AppBar>
+
+                <View>
+                    {this.state.propsChecker != "" ? <Text></Text> : <Text></Text>}
+                    
+                </View>
                 
                 <SafeAreaView>
                     {isLoading ? <ActivityIndicator /> : (
@@ -80,13 +93,13 @@ export default class Home extends Component{
                             renderItem={({item}) => {
                                 return (
                                     <Posts>
-                                        
+                                            
                                         <TouchableWithoutFeedback onPress={() => {
                                             navigate('Details', {itemId: item.id})}
                                         }
                                             >
-                                            <Item>
-                                                <TouchableWithoutFeedback onPress={()=>{navigate('UserProfile', {userId: userData[item.userId]['id']})}}>
+                                            <Item> 
+                                                <TouchableWithoutFeedback onPress ={()=>{navigate('UserProfile', {userId: userData[item.userId - 1]['id']})}}>
                                                     <UserName>{userData[item.userId - 1]['name']}</UserName>
                                                 </TouchableWithoutFeedback>
 
@@ -94,13 +107,11 @@ export default class Home extends Component{
 
                                             </Item>
                                         </TouchableWithoutFeedback>
-
-                                        <TouchableWithoutFeedback>
                                             <Icon name="delete-outline" size={30} color="black" onPress={()=>{
                                                 this.deleteItemFromApi(item.id)
-                                                this.deleteFromState(item.id)
+
                                             }}></Icon>
-                                        </TouchableWithoutFeedback> 
+
                                     </Posts>
                                         
                                 )

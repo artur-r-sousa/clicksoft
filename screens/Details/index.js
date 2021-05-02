@@ -43,11 +43,7 @@ export default class Details extends Component{
 
     deleteItemFromApi(itemId) {
         axios.delete('https://jsonplaceholder.typicode.com/posts/'+itemId)
-        this.setState({})
     }
-
-
-
 
     render() {
         const { route } = this.props;
