@@ -15,7 +15,8 @@ export default class UserProfile extends Component{
             titleInput: "",
             bodyInput: "",
             bodyPlaceholder: "how are you doing?",
-            titlePlaceholder: "enter post title"
+            titlePlaceholder: "enter post title",
+            newPostData: {}
 
         };
     }
@@ -50,9 +51,16 @@ export default class UserProfile extends Component{
                 body: body,
                 userId: userId,
             }
-        });
 
+        }).then((response)=>{
 
+            console.log(response.data)
+            this.setState({newPostData: response.data});
+            this.props.navigation.navigate("Home", {newPostData: response.data})
+        })
+        .catch((error)=>{
+            console.warn(error);
+        })
     }
 
     render(){
@@ -77,13 +85,15 @@ export default class UserProfile extends Component{
                 <TextInput value={this.state.bodyInput} onChangeText={(value)=>this.setState({bodyInput: value})} placeholder={this.state.bodyPlaceholder}></TextInput>
                 
                 <Button title="test api" onPress={()=>{
-                    this.postForApi(this.state.titleInput, this.state.bodyInput, this.props.route.params.userId);
+                    
                     if(this.state.titleInput == "") {
                         this.setState({titlePlaceholder: "please enter a title"}) 
                     } else if(this.state.bodyInput == "") {
                         this.setState({bodyPlaceholder: "posts must have content"}) 
                     } else{
-                        navigate("Home", {id: 101, userId: data.id, title: this.state.titleInput, body: this.state.bodyInput})}
+                        this.postForApi(this.state.titleInput, this.state.bodyInput, this.props.route.params.userId);
+
+                        }
                     }
                     }></Button>
             </KeyboardAvoidingView>
