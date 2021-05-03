@@ -53,8 +53,6 @@ export default class UserProfile extends Component{
             }
 
         }).then((response)=>{
-
-            console.log(response.data)
             this.setState({newPostData: response.data});
             this.props.navigation.navigate("Home", {newPostData: response.data})
         })

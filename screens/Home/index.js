@@ -21,7 +21,6 @@ export default class Home extends Component{
         this.fetchFromApi(); 
         this.fetchUsersFromApi();
         this.props.navigation.addListener('focus', () => {
-
             this.props.route.params == undefined ? "" : this.addToState();
         })
 
@@ -79,10 +78,11 @@ export default class Home extends Component{
     addToState() {
         let posts = []
         for(let item of this.state.postData){            
+            item.id = item.id+1
             posts.push(item)
-
         }
-        posts.push(this.props.route.params.newPostData)
+        this.props.route.params.newPostData.id = 1
+        posts.unshift(this.props.route.params.newPostData)
         this.setState({postData: posts})
         
     } 
