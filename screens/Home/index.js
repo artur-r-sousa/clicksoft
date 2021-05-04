@@ -35,7 +35,6 @@ export default class Home extends Component{
             key==null ? this.fetchFromApi() : this.getData();
 
         }catch(error){
-            console.log('ho')
             return false;
         }
     }
@@ -43,7 +42,7 @@ export default class Home extends Component{
 
     async getData () {
         try{
-            console.log('got')
+
             const keys = await AsyncStorage.getAllKeys();
             let arrayHolder = []
             if(keys!=undefined){
@@ -55,7 +54,6 @@ export default class Home extends Component{
                     }
                 }
             }   
-            console.log(arrayHolder[9]['id'], 'arrayHolder')
             this.setState({postData : arrayHolder})
             this.isLoading = false;
         } catch(error) {

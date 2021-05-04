@@ -9,6 +9,7 @@ export const Title = styled.Text`
     font-size: 25px;
     font-weight: 500;
     color: #FFF;
+    padding-left: 20px;
 `;
 
 export const AppBar = styled.View`
@@ -30,6 +31,16 @@ export const Posts = styled.View`
     margin-bottom: 3px;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
     border-radius: 6px;
+
+`;
+
+export const ProfileInfo = styled.View`
+
+`;
+
+export const UserInfo = styled.Text`
+    padding-left: 150px;
+    font-size: 15px;
 
 `;
 
@@ -83,12 +94,6 @@ export const ProfileText = styled.Text`
     padding: 5px;
 `;
 
-export const deleteButton = styled.Button`
-
-
-
-`;
-
 export const LatestPostLabel = styled.Text`
     margin-left: 30px;
     margin-top: 30px;
@@ -96,3 +101,13 @@ export const LatestPostLabel = styled.Text`
     font-weight: bold;
     color: #555555;
 `;
+
+export const Input = styled.View`
+    margin-left: 20px;
+    margin-right: 20px;
+`;
+
+export const ButtonCreate = styled.Button`
+    margin-left: 20px;
+`;
+
