@@ -2,6 +2,7 @@ import styled from "styled-components/native";
 
 export const Container = styled.View`
     background-color: #d3d3d3;
+
 `;
 
 export const Title = styled.Text`
@@ -28,6 +29,7 @@ export const Posts = styled.View`
     margin-top: 5px;
     margin-bottom: 3px;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
 
 `;
 
@@ -50,6 +52,7 @@ export const Item = styled.View`
     padding: 5px
     border-radius: 6px;
     border: 1px solid #000000;
+
 `;
 
 

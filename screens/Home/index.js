@@ -1,37 +1,74 @@
 import React, { Component } from 'react';
 import { FlatList, SafeAreaView, ActivityIndicator, TouchableWithoutFeedback, Text, View, ScrollView, SectionList } from 'react-native';
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Container, Title, Posts, PostText, UserName, Item, AppBar } from '../styles.js';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class Home extends Component{
     constructor(props: {}){
-        super(props);
-         
+        super(props); 
+        this.isLoading = true;
         this.state = {
             isLoading: true,
             postData: [],
             userData: [],
-
         };
+        
         
     } 
 
-    componentDidMount(){   
-        this.fetchFromApi(); 
+    componentDidMount(){ 
+        this.checkForKey();
         this.fetchUsersFromApi();
         this.props.navigation.addListener('focus', () => {
             this.props.route.params == undefined ? "" : this.addToState();
-        })
 
+        })
+        
     }
 
 
-    fetchFromApi(){
-        axios.get('https://jsonplaceholder.typicode.com/posts').then((response)=> { 
-                this.setState({postData: response.data}); 
-                this.setState({isLoading: false})
-            }
+    async checkForKey(){
+        try{
+            const key = await AsyncStorage.getItem('1');
+            key==null ? this.fetchFromApi() : this.getData();
+
+        }catch(error){
+            console.log('ho')
+            return false;
+        }
+    }
+
+
+    async getData () {
+        try{
+            console.log('got')
+            const keys = await AsyncStorage.getAllKeys();
+            let arrayHolder = []
+            if(keys!=undefined){
+                for(let value of keys) {
+                    if(value != undefined) {
+                        let item = await AsyncStorage.getItem(value);
+                        
+                        arrayHolder.push(JSON.parse(item))
+                    }
+                }
+            }   
+            console.log(arrayHolder[9]['id'], 'arrayHolder')
+            this.setState({postData : arrayHolder})
+            this.isLoading = false;
+        } catch(error) {
+            console.log(error)
+
+        }
+    }
+    fetchFromApi(){  
+        axios.get('https://jsonplaceholder.typicode.com/posts').then((response)=> {  
+                this.setState({postData: response.data});  
+                this.isLoading = false;
+                
+            } 
         )
         .catch((error)=>{
             console.log(error);
@@ -46,14 +83,7 @@ export default class Home extends Component{
             console.warn(error);
         })
     }
-    fetchUserNameFromApi(userId){
-        axios.get('https://jsonplaceholder.typicode.com/users/'+userId).then((response)=> { 
-            console.log(response) 
-        })
-        .catch((error)=>{
-            console.warn(error);
-        })
-    }
+
    
     deleteItemFromApi(itemId) {
         axios.delete('https://jsonplaceholder.typicode.com/posts/'+itemId).then(() => {
@@ -75,27 +105,38 @@ export default class Home extends Component{
         this.setState({postData: posts})
     }
 
+    async storeData (item) {
+        try{
+            const itemId = JSON.stringify(item.id)
+            const itemString = JSON.stringify(item)
+            await AsyncStorage.setItem(
+                itemId,
+                itemString
+            );
+        } catch(error) {
+            console.error(error);
+        }
+    }
+
     addToState() {
         let posts = []
         for(let item of this.state.postData){            
             item.id = item.id+1
-            posts.push(item)
+            posts.push(item) 
         }
         this.props.route.params.newPostData.id = 1
         posts.unshift(this.props.route.params.newPostData)
+        for (let item of posts){
+            this.storeData(item) 
+        }    
         this.setState({postData: posts})
+        this.isLoading = false;
         
     } 
 
-    componentWillUnmount(){
-
-    }
-
-
-
     render() {
         
-        const { postData, userData, isLoading } = this.state; 
+        const { postData, userData } = this.state; 
         const { navigate } = this.props.navigation;  
 
         return ( 
@@ -105,11 +146,11 @@ export default class Home extends Component{
                 </AppBar>
 
                         <SafeAreaView>
-                            {isLoading ? <ActivityIndicator /> : (
-                                <FlatList
-                                contentContainerStyle={{ paddingBottom: 150 }}
+                            {this.isLoading ? <ActivityIndicator /> : (
+                                <FlatList 
+                                    contentContainerStyle={{ paddingBottom: 150 }}
                                     data={postData}
-                                    keyExtractor={(item) => item['id'].toString()}
+                                    keyExtractor={(item) => item["id"].toString()}
                                     renderItem={({item}) => {
                                         return (
                                             <Posts>
